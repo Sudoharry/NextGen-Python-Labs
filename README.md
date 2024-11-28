@@ -24,23 +24,23 @@ Welcome to Python Labs, a comprehensive learning journey designed to take you fr
 - Techniques for testing and validation using pytest and unittest.
 
 ### 5) Best Practices for Code Reusability and Maintainability:
-Writing modular and DRY (Don't Repeat Yourself) code.
-Implementing design patterns for scalable applications.
-Adopting PEP 8 guidelines for clean and readable code.
-Using version control systems like Git for collaborative development.
+- Writing modular and DRY (Don't Repeat Yourself) code.
+- Implementing design patterns for scalable applications.
+- Adopting PEP 8 guidelines for clean and readable code.
+- Using version control systems like Git for collaborative development.
 
 ### 6)Advanced Programming Concepts:
 
-Asynchronous programming with asyncio.
-Exploring metaprogramming and decorators.
-Working with Python's C extensions for performance optimization.
-
+- Asynchronous programming with asyncio.
+- Exploring metaprogramming and decorators.
+- Working with Python's C extensions for performance optimization.
+ 
 ### 7) Practical Applications:
 
-Data analysis with Pandas and NumPy.
-Web development using Flask or Django.
-Automation with scripts and bots.
-Introduction to AI and Machine Learning using TensorFlow or PyTorch.
+- Data analysis with Pandas and NumPy.
+- Web development using Flask or Django.
+- Automation with scripts and bots.
+- Introduction to AI and Machine Learning using TensorFlow or PyTorch.
 
 ## Features of Python Labs:
 - **Hands-On Projects**: Real-world scenarios to build your portfolio.

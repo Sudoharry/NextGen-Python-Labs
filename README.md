@@ -1,4 +1,4 @@
-# Python Labs: From Basics to Advanced Programming Mastery
+# NextGen Python Labs: From Basics to Advanced Programming Mastery
 
 Welcome to Python Labs, a comprehensive learning journey designed to take you from the fundamentals of programming to advanced Python techniques. Whether you're a beginner looking to understand core concepts or an experienced programmer aiming to refine your skills, Python Labs has something for everyone. Here's what you'll gain:
 
@@ -42,7 +42,7 @@ Welcome to Python Labs, a comprehensive learning journey designed to take you fr
 - Automation with scripts and bots.
 - Introduction to AI and Machine Learning using TensorFlow or PyTorch.
 
-## Features of Python Labs:
+## Features of NextGen Python Labs:
 - **Hands-On Projects**: Real-world scenarios to build your portfolio.
 - **Interactive Troubleshooting Exercises**: Focused challenges to enhance your debugging skills.
 - **Code Reviews and Feedback**: Learn how to optimize and refactor code for maintainability.

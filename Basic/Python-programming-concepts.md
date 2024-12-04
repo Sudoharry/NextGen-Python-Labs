@@ -1,6 +1,6 @@
 ## 1)Variables and Data Types
 
-    - Variables: Used to store data
+- Variables: Used to store data
      
       Ex:
         name = "Harry"     # String
@@ -8,7 +8,7 @@
         height = 6.2       # Float 
         is_student = True  # Boolean
 
-    - Data Types
+- Data Types
   
       - int: Whole number (e.g., 1, -10)
       - float: Decimal numbers (e.g., 3.14)
@@ -18,19 +18,19 @@
 
 ## 2) Input and Output
 
-     - Input: Accept user input.
+- Input: Accept user input.
         
        Ex: name = input ("Enter your name: ")
 
-     - Output: Print data to the console.
+- Output: Print data to the console.
      
        Ex: print(f"Hello, {name}")
  
 ## 3) Conditional Statements:
 
-     - Used for decision-making:
+- Used for decision-making:
       
-      - If-else: 
+  - If-else: 
         
        ex: 
 
@@ -40,7 +40,7 @@
           else:
               print("You are a minor.")  
     
-         - Elif (Else if):
+  - Elif (Else if):
           
            ex:
               score = 75
@@ -51,15 +51,15 @@
               else:
                  print("Grade: C")
 ## 4. Loops
-      Used to repeat actions.
+Used to repeat actions.
 
-     - For Loop: Iterates over a sequence.
+- For Loop: Iterates over a sequence.
 
 
        for i in range(5):
           print(i)  # Prints 0 to 4
 
-      - While Loop: Runs until a condition is false.
+ - While Loop: Runs until a condition is false.
 
          count = 0
          while count < 5:
@@ -68,14 +68,14 @@
 
 ## 5. Functions
    
-   Reusable blocks of code.
+Reusable blocks of code.
 
-     -  Defining and Calling:
+ -  Defining and Calling:
 
         def greet(name):
            return f"Hello, {name}!"
 
-    print(greet("Alice"))
+    print(greet("Harry"))
 
 
 ## 6. Data Structures
@@ -83,13 +83,13 @@
    - Lists: Ordered collection.
 
 
-      fruits = ["apple", "banana", "cherry"]
+      fruits = ["apple", "banana", "papaya"]
       print(fruits[0])  # Access element
       fruits.append("orange")  # Add element
 
   - Dictionaries: Key-value pairs.
 
-      person = {"name": "Alice", "age": 25}
+      person = {"name": "Harry", "age": 28}
       print(person["name"])
 
   - Tuples: Immutable ordered collection.
@@ -128,6 +128,7 @@
 
        with open("example.txt", "w") as file:
        file.write("Hello, World!")
+     
 ## 9. Classes and Objects (OOP Basics)
      - Defining a Class:
         class Person:
@@ -138,7 +139,7 @@
         def greet(self):
            return f"Hi, I'm {self.name}."
 
-        alice = Person("Alice", 25)
+        alice = Person("Harry", 28)
         print(alice.greet())
 
 ## 10. Modules and Libraries

@@ -1,4 +1,4 @@
-##The program defines a function check_even_odd that checks whether the remainder of the number divided by 2 is 0.
+## The program defines a function check_even_odd that checks whether the remainder of the number divided by 2 is 0.
 
 1) If the remainder is 0, the number is even; otherwise, it is odd.
 2) It takes an integer input from the user and calls the function.

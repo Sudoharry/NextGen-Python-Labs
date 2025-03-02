@@ -24,11 +24,16 @@
 
 
 
-### Nested Dict 
+### Nested Dictionary 
 
 
 student = {
     "name" : "Harry",
+    "age" : 29,
+    "state" : "Gujarat",
+    "addres": "Gandhidham",
+    "pincode" : 370201,
+
     "score":  {
        "chem" : 98,
        "phy" : 97,
@@ -39,5 +44,28 @@ student = {
 
 }
 
-student["name"] = "Harendra"
+# student["name"] = "Harendra"
+# print(student["score"]["chem"])
+# print(list(student.keys()))
+# print(student.values())
+
+
+# print(list(student.values()))
+
+# pairs = (list(student.items()))
+# print(pairs[1])
+
+
+# print(student.get("age"))
+# print(student.get("pincode"))
+# print(student.get("pincode1"))
+
+
+# student.update({"contact" : 8849964295})
+# print(student)
+
+
+new_dict = {"contact" : 8849964295, "email" : "harendrabarot19@gmail.com"}
+student.update(new_dict)
+
 print(student)

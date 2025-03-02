@@ -25,7 +25,6 @@ for char in str:
       break
     print(char)
 
-
 else:
 
     print("Loop ends")    

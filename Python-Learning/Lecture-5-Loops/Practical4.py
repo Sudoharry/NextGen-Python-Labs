@@ -21,6 +21,6 @@ fact = 1   #.. we initialize the variable everytime with 1.
 i = 1
 for i in range(1, n+1):
     fact *= i
-    i += 1
+    # i += 1
 
 print("factorial=", fact)   

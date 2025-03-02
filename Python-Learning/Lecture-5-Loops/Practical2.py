@@ -17,6 +17,6 @@ x = 49
 idx = 0
 
 for el in nums:
-    if (el == x):
+    if (el == x):   ## linear search
      print("Number found at idx", idx)
     idx += 1

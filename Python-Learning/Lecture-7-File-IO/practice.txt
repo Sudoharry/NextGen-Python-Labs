@@ -1,0 +1,5 @@
+Hi everyone. 
+We are learning File I/O using Python 
+I like programming in Python.
+How are you bro?
+I'm fine. Can you please teach me the list and dictionaries in the python?

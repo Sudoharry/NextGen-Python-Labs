@@ -1,0 +1,95 @@
+/* Base Styles */
+:root {
+    --primary-color: #000000;
+    --operator-color: #ff9f0a;
+    --func-color: #a5a5a5;
+    --number-color: #333333;
+    --display-color: #f8f9fa;
+}
+
+* {
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background: #f0f0f0;
+}
+
+/* Calculator Container */
+.calculator {
+    width: 320px;
+    background: var(--primary-color);
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+/* Display Section */
+.display {
+    color: white;
+    font-size: 72px;
+    text-align: right;
+    padding: 20px;
+    height: 120px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+
+/* Buttons Grid Layout */
+.buttons-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+/* Button Base Styles */
+.btn {
+    border: none;
+    padding: 20px;
+    font-size: 24px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: filter 0.2s;
+}
+
+.btn:active {
+    filter: brightness(1.2);
+}
+
+/* Button Types */
+.number {
+    background: var(--number-color);
+    color: white;
+}
+
+.operator {
+    background: var(--operator-color);
+    color: white;
+}
+
+.func {
+    background: var(--func-color);
+    color: black;
+}
+
+/* Special Buttons */
+.zero {
+    grid-column: span 2;
+    border-radius: 35px !important;
+}
+
+.equals {
+    border-radius: 35px !important;
+}

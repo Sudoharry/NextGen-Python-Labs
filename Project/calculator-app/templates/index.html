@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Simple Calcualtor </title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    
+</head>        
+
+<body>
+    <div class="calcualtor">
+    <div clas="display" id="display">0</div>
+    <div class="buttons-grid">
+        <!-- First Row -->
+        <button class="btn func" data-action="clear">C</button>
+        <button class="btn func" data-action="sign">±</button>
+        <button class="btn func" data-action="percent">%</button>
+        <button class="btn operator" data-operator="÷">÷</button>
+        
+        <!-- Number Rows -->
+        <button class="btn number">7</button>
+        <button class="btn number">8</button>
+        <button class="btn number">9</button>
+        <button class="btn operator" data-operator="×">×</button>
+        
+        <button class="btn number">4</button>
+        <button class="btn number">5</button>
+        <button class="btn number">6</button>
+        <button class="btn operator" data-operator="-">−</button>
+        
+        <button class="btn number">1</button>
+        <button class="btn number">2</button>
+        <button class="btn number">3</button>
+        <button class="btn operator" data-operator="+">+</button>
+        
+        <!-- Bottom Row -->
+        <button class="btn number zero">0</button>
+        <button class="btn number decimal">.</button>
+        <button class="btn operator equals" data-action="calculate">=</button>
+    </div>    
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>    
+</html>

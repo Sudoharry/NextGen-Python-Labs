@@ -1,0 +1,18 @@
+[
+  {
+    "motor_id": "motorev123",
+    "motor_type": "Stepper",
+    "power_rating": 12.0,
+    "installation_date": "2025-03-08",
+    "location": "Antarjal",
+    "status": "Operational"
+  },
+  {
+    "motor_id": "harry123",
+    "motor_type": "AC Induction",
+    "power_rating": 24.0,
+    "installation_date": "2025-03-08",
+    "location": "Gandhidham",
+    "status": "Operational"
+  }
+]

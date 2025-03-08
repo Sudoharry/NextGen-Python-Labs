@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<title></title>
+	<meta name="generator" content="LibreOffice 24.8.4.2 (Linux)"/>
+	<meta name="created" content="2025-03-07T17:00:15.938233434"/>
+	<meta name="changed" content="2025-03-07T17:01:31.580823239"/>
+</head>
+<body lang="en-US" dir="ltr"><p>from PyQt5.QtWidgets import
+(QMainWindow, QApplication, QLabel, QVBoxLayout, 
+</p>
+<p>                             QPushButton, QWidget, QLineEdit,
+QTableWidget,</p>
+<p>                             QTableWidgetItem, QHBoxLayout,
+QMessageBox,</p>
+<p>                             QHeaderView, QDateEdit, QComboBox)</p>
+<p>from PyQt5.QtGui import QIcon</p>
+<p>from PyQt5.QtCore import Qt, QDate</p>
+<p>import sys</p>
+<p>import os</p>
+<p>import json</p>
+<p><br/>
+<br/>
+
+</p>
+<p>basedir = os.path.dirname(__file__)</p>
+<p>DATA_FILE = os.path.join(basedir, 'motor_data.json')</p>
+<p><br/>
+<br/>
+
+</p>
+<p>class MotorSurveyApp(QMainWindow):</p>
+<p>    def __init__(self):</p>
+<p>        super().__init__()</p>
+<p>        self.setWindowTitle(&quot;Motor Survey Reporting System&quot;)</p>
+<p>        self.setMinimumSize(800, 600)</p>
+<p>        
+</p>
+<p>        # Initialize data storage</p>
+<p>        self.motor_data = []</p>
+<p>        self.load_data()</p>
+<p>        
+</p>
+<p>        # Create UI elements</p>
+<p>        self.create_widgets()</p>
+<p>        self.create_layout()</p>
+<p>        self.setup_table()</p>
+<p>        self.show()</p>
+<p><br/>
+<br/>
+
+</p>
+<p>    def create_widgets(self):</p>
+<p>        &quot;&quot;&quot;Create input widgets&quot;&quot;&quot;</p>
+<p>        self.motor_id_input = QLineEdit(placeholderText=&quot;Motor
+ID&quot;)</p>
+<p>        self.motor_type_input = QComboBox()</p>
+<p>        self.motor_type_input.addItems([&quot;AC Induction&quot;,
+&quot;DC Brushless&quot;, &quot;Stepper&quot;, &quot;Servo&quot;])</p>
+<p>        self.power_rating_input = QLineEdit(placeholderText=&quot;Power
+Rating (kW)&quot;)</p>
+<p>        self.installation_date = QDateEdit(calendarPopup=True)</p>
+<p>        self.installation_date.setDate(QDate.currentDate())</p>
+<p>        self.location_input =
+QLineEdit(placeholderText=&quot;Location&quot;)</p>
+<p>        self.status_input = QComboBox()</p>
+<p>        self.status_input.addItems([&quot;Operational&quot;,
+&quot;Maintenance&quot;, &quot;Faulty&quot;])</p>
+<p>        
+</p>
+<p>        # Buttons</p>
+<p>        self.add_btn = QPushButton(&quot;Add Motor&quot;,
+clicked=self.add_motor)</p>
+<p>        self.edit_btn = QPushButton(&quot;Edit Selected&quot;,
+clicked=self.edit_motor)</p>
+<p>        self.delete_btn = QPushButton(&quot;Delete Selected&quot;,
+clicked=self.delete_motor)</p>
+<p>        
+</p>
+<p>        # Table</p>
+<p>        self.table = QTableWidget()</p>
+<p>        self.table.setColumnCount(6)</p>
+<p>        self.table.setHorizontalHeaderLabels([</p>
+<p>            &quot;Motor ID&quot;, &quot;Type&quot;, &quot;Power
+(kW)&quot;, &quot;Installation Date&quot;, 
+</p>
+<p>            &quot;Location&quot;, &quot;Status&quot;</p>
+<p>        ])</p>
+<p><br/>
+<br/>
+
+</p>
+<p>    def create_layout(self):</p>
+<p>        &quot;&quot;&quot;Set up main layout&quot;&quot;&quot;</p>
+<p>        main_widget = QWidget()</p>
+<p>        main_layout = QHBoxLayout()</p>
+<p>        
+</p>
+<p>        # Input form layout</p>
+<p>        form_layout = QVBoxLayout()</p>
+<p>        inputs = [</p>
+<p>            self.motor_id_input,</p>
+<p>            self.motor_type_input,</p>
+<p>            self.power_rating_input,</p>
+<p>            self.installation_date,</p>
+<p>            self.location_input,</p>
+<p>            self.status_input,</p>
+<p>            self.add_btn,</p>
+<p>            self.edit_btn,</p>
+<p>            self.delete_btn</p>
+<p>        ]</p>
+<p>        
+</p>
+<p>        for widget in inputs:</p>
+<p>            form_layout.addWidget(widget)</p>
+<p>        
+</p>
+<p>        # Add layouts to main layout</p>
+<p>        main_layout.addLayout(form_layout, 1)</p>
+<p>        main_layout.addWidget(self.table, 3)</p>
+<p>        main_widget.setLayout(main_layout)</p>
+<p>        self.setCentralWidget(main_widget)</p>
+<p><br/>
+<br/>
+
+</p>
+<p>    def setup_table(self):</p>
+<p>        &quot;&quot;&quot;Configure table appearance&quot;&quot;&quot;</p>
+<p>        header = self.table.horizontalHeader()</p>
+<p>        header.setSectionResizeMode(QHeaderView.Stretch)</p>
+<p>        self.table.setAlternatingRowColors(True)</p>
+<p>        self.table.setSelectionBehavior(QTableWidget.SelectRows)</p>
+<p>        self.populate_table()</p>
+<p><br/>
+<br/>
+
+</p>
+<p>    def load_data(self):</p>
+<p>        &quot;&quot;&quot;Load data from JSON file&quot;&quot;&quot;</p>
+<p>        try:</p>
+<p>            with open(DATA_FILE, 'r') as f:</p>
+<p>                self.motor_data = json.load(f)</p>
+<p>        except (FileNotFoundError, json.JSONDecodeError):</p>
+<p>            self.motor_data = []</p>
+<p><br/>
+<br/>
+
+</p>
+<p>    def save_data(self):</p>
+<p>        &quot;&quot;&quot;Save data to JSON file&quot;&quot;&quot;</p>
+<p>        with open(DATA_FILE, 'w') as f:</p>
+<p>            json.dump(self.motor_data, f, indent=2)</p>
+<p><br/>
+<br/>
+
+</p>
+<p>    def populate_table(self):</p>
+<p>        &quot;&quot;&quot;Refresh table with current data&quot;&quot;&quot;</p>
+<p>        self.table.setRowCount(len(self.motor_data))</p>
+<p>        for row, motor in enumerate(self.motor_data):</p>
+<p>            self.table.setItem(row, 0,
+QTableWidgetItem(motor['motor_id']))</p>
+<p>            self.table.setItem(row, 1,
+QTableWidgetItem(motor['motor_type']))</p>
+<p>            self.table.setItem(row, 2,
+QTableWidgetItem(str(motor['power_rating'])))</p>
+<p>            self.table.setItem(row, 3,
+QTableWidgetItem(motor['installation_date']))</p>
+<p>            self.table.setItem(row, 4,
+QTableWidgetItem(motor['location']))</p>
+<p>            self.table.setItem(row, 5,
+QTableWidgetItem(motor['status']))</p>
+<p><br/>
+<br/>
+
+</p>
+<p>    def validate_inputs(self):</p>
+<p>        &quot;&quot;&quot;Check required fields are filled&quot;&quot;&quot;</p>
+<p>        if not self.motor_id_input.text().strip():</p>
+<p>            QMessageBox.warning(self, &quot;Error&quot;, &quot;Motor
+ID is required!&quot;)</p>
+<p>            return False</p>
+<p>        try:</p>
+<p>            float(self.power_rating_input.text())</p>
+<p>        except ValueError:</p>
+<p>            QMessageBox.warning(self, &quot;Error&quot;, &quot;Invalid
+power rating!&quot;)</p>
+<p>            return False</p>
+<p>        return True</p>
+<p><br/>
+<br/>
+
+</p>
+<p>    def clear_inputs(self):</p>
+<p>        &quot;&quot;&quot;Reset input fields&quot;&quot;&quot;</p>
+<p>        self.motor_id_input.clear()</p>
+<p>        self.motor_type_input.setCurrentIndex(0)</p>
+<p>        self.power_rating_input.clear()</p>
+<p>        self.installation_date.setDate(QDate.currentDate())</p>
+<p>        self.location_input.clear()</p>
+<p>        self.status_input.setCurrentIndex(0)</p>
+<p><br/>
+<br/>
+
+</p>
+<p>    def add_motor(self):</p>
+<p>        &quot;&quot;&quot;Add new motor entry&quot;&quot;&quot;</p>
+<p>        if not self.validate_inputs():</p>
+<p>            return</p>
+<p>        
+</p>
+<p>        new_motor = {</p>
+<p>            &quot;motor_id&quot;: self.motor_id_input.text(),</p>
+<p>            &quot;motor_type&quot;:
+self.motor_type_input.currentText(),</p>
+<p>            &quot;power_rating&quot;:
+float(self.power_rating_input.text()),</p>
+<p>            &quot;installation_date&quot;:
+self.installation_date.date().toString(&quot;yyyy-MM-dd&quot;),</p>
+<p>            &quot;location&quot;: self.location_input.text(),</p>
+<p>            &quot;status&quot;: self.status_input.currentText()</p>
+<p>        }</p>
+<p>        
+</p>
+<p>        self.motor_data.append(new_motor)</p>
+<p>        self.save_data()</p>
+<p>        self.populate_table()</p>
+<p>        self.clear_inputs()</p>
+<p>        QMessageBox.information(self, &quot;Success&quot;, &quot;Motor
+added successfully!&quot;)</p>
+<p><br/>
+<br/>
+
+</p>
+<p>    def edit_motor(self):</p>
+<p>        &quot;&quot;&quot;Edit selected motor entry&quot;&quot;&quot;</p>
+<p>        selected_row = self.table.currentRow()</p>
+<p>        if selected_row == -1:</p>
+<p>            QMessageBox.warning(self, &quot;Error&quot;, &quot;Please
+select a motor to edit!&quot;)</p>
+<p>            return</p>
+<p>        
+</p>
+<p>        if not self.validate_inputs():</p>
+<p>            return</p>
+<p>        
+</p>
+<p>        updated_motor = {</p>
+<p>            &quot;motor_id&quot;: self.motor_id_input.text(),</p>
+<p>            &quot;motor_type&quot;:
+self.motor_type_input.currentText(),</p>
+<p>            &quot;power_rating&quot;:
+float(self.power_rating_input.text()),</p>
+<p>            &quot;installation_date&quot;:
+self.installation_date.date().toString(&quot;yyyy-MM-dd&quot;),</p>
+<p>            &quot;location&quot;: self.location_input.text(),</p>
+<p>            &quot;status&quot;: self.status_input.currentText()</p>
+<p>        }</p>
+<p>        
+</p>
+<p>        self.motor_data[selected_row] = updated_motor</p>
+<p>        self.save_data()</p>
+<p>        self.populate_table()</p>
+<p>        QMessageBox.information(self, &quot;Success&quot;, &quot;Motor
+updated successfully!&quot;)</p>
+<p><br/>
+<br/>
+
+</p>
+<p>    def delete_motor(self):</p>
+<p>        &quot;&quot;&quot;Delete selected motor entry&quot;&quot;&quot;</p>
+<p>        selected_row = self.table.currentRow()</p>
+<p>        if selected_row == -1:</p>
+<p>            QMessageBox.warning(self, &quot;Error&quot;, &quot;Please
+select a motor to delete!&quot;)</p>
+<p>            return</p>
+<p>        
+</p>
+<p>        reply = QMessageBox.question(</p>
+<p>            self, 'Confirm Delete',</p>
+<p>            'Are you sure you want to delete this motor entry?',</p>
+<p>            QMessageBox.Yes | QMessageBox.No, QMessageBox.No</p>
+<p>        )</p>
+<p>        
+</p>
+<p>        if reply == QMessageBox.Yes:</p>
+<p>            del self.motor_data[selected_row]</p>
+<p>            self.save_data()</p>
+<p>            self.populate_table()</p>
+<p>            QMessageBox.information(self, &quot;Success&quot;,
+&quot;Motor deleted successfully!&quot;)</p>
+<p><br/>
+<br/>
+
+</p>
+<p>if __name__ == '__main__':</p>
+<p>    app = QApplication(sys.argv)</p>
+<p>    app.setWindowIcon(QIcon(os.path.join(basedir, &quot;icons&quot;,
+&quot;report.svg&quot;)))</p>
+<p>    window = MotorSurveyApp()</p>
+<p>    sys.exit(app.exec_())</p>
+</body>
+</html>

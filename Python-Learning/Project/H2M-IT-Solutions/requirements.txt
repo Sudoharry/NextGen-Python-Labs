@@ -1,0 +1,12 @@
+flask
+flask-sqlalchemy
+flask-caching
+flask-limiter
+flask-talisman
+flask-admin
+flask-login
+pillow
+python-dotenv
+apscheduler
+pytest
+gunicorn

@@ -1,0 +1,203 @@
+{% extends 'base.html' %}
+{% load static socialaccount %}
+
+{% block title %}Login/Register - JSR Supplements{% endblock %}
+
+{% block extra_css %}
+<style>
+    .auth-container {
+        max-width: 500px;
+        margin: 2rem auto;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+    }
+    
+    .offer-banner {
+        background:hsl(224, 85.80%, 49.60%);
+        color: white;
+        padding: 1rem;
+        border-radius: 8px;
+        margin-bottom: 2rem;
+        text-align: center;
+    }
+    
+    .auth-toggle {
+        display: flex;
+        margin-bottom: 1.5rem;
+        border-bottom: 2px solid #eee;
+    }
+    
+    .auth-tab {
+        flex: 1;
+        padding: 1rem;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+    
+    .auth-tab.active {
+        border-bottom: 3px solid #28a745;
+        font-weight: 600;
+        color: #28a745;
+    }
+    
+    .google-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 40px;
+        background: white;
+        color: #8b5c5c;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-weight: 500;
+        text-decoration: none;
+        transition: all 0.3s;
+        font-size: 16px; /* Ensure uniform text size */
+    }
+    
+    .google-btn:hover {
+        border-color: #28a745;
+        color: #28a745;
+    }
+    
+    .terms-text {
+        font-size: 0.9rem;
+        color: #666;
+        margin-top: 1.5rem;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="auth-container bg-white">
+        <div class="offer-banner">
+            <h5>NEW USER OFFER</h5>
+            <p class="mb-0">5% off on all brands</p>
+        </div>
+
+        <div class="auth-toggle">
+            <div class="auth-tab active" data-tab="login">LOGIN</div>
+            <div class="auth-tab" data-tab="register">REGISTER</div>
+        </div>
+
+        <!-- Login Form -->
+        <form id="loginForm" class="auth-form" method="post" action="/login_register/">
+            {% csrf_token %}
+            <input type="hidden" name="form_type" value="login"> 
+
+            <div class="mb-3">
+                <input type="text" 
+                       class="form-control" 
+                       name="username"
+                       placeholder="Username" 
+                       pattern="[a-zA-Z0-9.+_-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}|[0-9]{10}" 
+                       required>
+            </div>
+
+            <div class="mb-3">
+                <input type="password" 
+                       class="form-control" 
+                       name="password" 
+                       placeholder="Password" 
+                       pattern="[0-9]{10}" 
+                       required>
+            </div>
+            <button type="submit" class="btn btn-success w-100">Continue</button>
+        </form>
+
+        <!-- Register Form (Hidden by default) -->
+        <form id="registerForm" class="auth-form" method="post" action="/login_register/" style="display: none;">
+            {% csrf_token %}
+            <input type="hidden" name="form_type" value="register"> 
+            <div class="mb-3">
+                <input type="username" 
+                       class="form-control" 
+                       name="username" 
+                       placeholder="Full Name" 
+                       required>
+            </div>
+            <div class="mb-3">
+                <input type="email" 
+                       class="form-control" 
+                       name="email" 
+                       placeholder="Email Address" 
+                       required>
+            </div>
+            <div class="mb-3">
+                <input type="tel" 
+                       class="form-control" 
+                       name="phone" 
+                       placeholder="Mobile Number" 
+                       pattern="[0-9]{10}" 
+                       required>
+            </div>
+
+            <div class="mb-3">
+                <input type="password" 
+                       class="form-control" 
+                       name="password" 
+                       placeholder="Password" 
+                       pattern="[0-9]{10}" 
+                       required>
+            </div>
+            <button type="submit" class="btn btn-success w-100">Create Account</button>
+        </form>
+
+        <div class="text-center my-4">OR</div>
+
+        <!-- Google Authentication -->
+        <a href="{% provider_login_url 'google' %}" class="google-btn">
+            <i class="fab fa-google me-4"></i>Continue with Google
+        </a>
+
+        <div class="terms-text">
+            By continuing you agree to JSR Supplements's 
+            <a href="#">Terms of Use</a> and 
+            <a href="#">Privacy Policy</a>
+        </div>
+
+        {% comment %} <div class="mt-4">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="checkOrders">
+                <label class="form-check-label" for="checkOrders">
+                    Check your past orders
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="trackOrders" checked>
+                <label class="form-check-label" for="trackOrders">
+                    Track your orders
+                </label>
+            </div>
+        </div> {% endcomment %}
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const tabs = document.querySelectorAll('.auth-tab');
+    const forms = document.querySelectorAll('.auth-form');
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+            // Remove active class from all tabs
+            tabs.forEach(t => t.classList.remove('active'));
+            // Hide all forms
+            forms.forEach(form => form.style.display = 'none');
+            
+            // Activate clicked tab
+            this.classList.add('active');
+            // Show corresponding form
+            const tabType = this.dataset.tab;
+            document.getElementById(`${tabType}Form`).style.display = 'block';
+        });
+    });
+});
+</script>
+{% endblock %}

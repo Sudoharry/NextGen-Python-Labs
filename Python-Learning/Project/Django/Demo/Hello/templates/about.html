@@ -1,9 +1,354 @@
-{% extends 'base.html'%}
+{% extends 'base.html' %}
+{% load static %}
 
-{% block title%}About Us{% endblock title%}
+{% block title %}About Us{% endblock title %}
 
-{% block body%}
+{% block extra_css %}
+<style>
+    :root {
+        --primary-gradient: linear-gradient(135deg, #007bff 0%, #00dbde 100%);
+        --text-dark: #2c3e50;
+        --accent-color: #ff6b6b;
+    }
 
-This is About Us block
+    .hero-section {
+        background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url("{% static 'images/about-hero.jpg' %}") center/cover;
+        padding: 12rem 0;
+        clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+        position: relative;
+        overflow: hidden;
+    }
 
-{% endblock body%}
+    .hero-section::after {
+        content: '';
+        position: absolute;
+        bottom: -50px;
+        left: -10%;
+        width: 120%;
+        height: 100px;
+        background: var(--primary-gradient);
+        transform: rotate(-2deg);
+        z-index: 1;
+    }
+
+    .about-card {
+        max-width: 1400px;
+        margin: -8rem auto 4rem;
+        padding: 5rem;
+        border-radius: 40px;
+        background: rgba(255,255,255,0.98);
+        backdrop-filter: blur(20px);
+        box-shadow: 0 24px 80px rgba(0,0,0,0.12);
+        position: relative;
+        z-index: 2;
+    }
+
+    .mission-section {
+        background: var(--primary-gradient);
+        border-radius: 30px;
+        overflow: hidden;
+        position: relative;
+        color: white;
+        transform: rotate(-1deg);
+        margin: 4rem -2rem;
+        padding: 3rem;
+    }
+
+    .stat-card {
+        background: rgba(255,255,255,0.95);
+        border-radius: 20px;
+        padding: 2rem;
+        transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        border: 2px solid transparent;
+    }
+
+    .stat-card:hover {
+        transform: translateY(-10px);
+        border-color: var(--accent-color);
+        box-shadow: 0 15px 40px rgba(255,107,107,0.15);
+    }
+
+    .timeline-item {
+        position: relative;
+        padding-left: 4rem;
+        margin-bottom: 4rem;
+        border-left: 3px solid var(--primary-color);
+    }
+
+    .timeline-item::before {
+        content: '';
+        position: absolute;
+        left: -10px;
+        top: 0;
+        width: 20px;
+        height: 20px;
+        background: white;
+        border: 3px solid var(--primary-color);
+        border-radius: 50%;
+    }
+
+    .team-member-card {
+        height: 300px; /* Set your desired height */
+        width: auto;
+        position: relative;
+        overflow: hidden;
+        border-radius: 20px;
+        transition: all 0.4s ease;
+    }
+
+    .team-member-card:hover img {
+        transform: scale(1.1);
+    }
+
+    .team-overlay {
+        position: absolute;
+        bottom: -100%;
+        left: 0;
+        right: 0;
+        background: rgba(0,123,255,0.9);
+        color: white;
+        padding: 2rem;
+        transition: all 0.4s ease;
+    }
+
+    .team-member-card:hover .team-overlay {
+        bottom: 0;
+    }
+
+    @media (max-width: 768px) {
+        .hero-section {
+            padding: 8rem 0;
+        }
+        
+        .about-card {
+            padding: 2rem;
+            margin-top: -6rem;
+        }
+        
+        .mission-section {
+            margin: 2rem 0;
+            transform: none;
+        }
+    }
+</style>
+{% endblock extra_css %}
+
+{% block body %}
+<div class="hero-section">
+    <div class="container text-center position-relative z-index-2">
+        <h1 class="display-1 fw-bold mb-4 text-white animate__animated animate__fadeInDown">
+            Fueling <span class="text-accent">Your Potential</span>
+        </h1>
+        <p class="lead fs-2 text-light opacity-90 animate__animated animate__fadeInUp animate__delay-1s">
+            Science-Backed Nutrition Solutions
+        </p>
+    </div>
+</div>
+
+<div class="container">
+    <div class="about-card">
+        <!-- Mission Section -->
+        <section class="mission-section animate-on-scroll" data-animation="animate__zoomIn">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-6">
+                    <h2 class="display-3 mb-4">Our Commitment</h2>
+                    <p class="lead fs-4">
+                        Merging cutting-edge research with nature's finest ingredients to 
+                        create transformative nutritional solutions.
+                    </p>
+                </div>
+                 <div class="col-lg-6">
+                    <div class="ratio ratio-16x9">
+                        <video class="rounded-4" autoplay muted loop>
+                            <source src="{% static 'videos/lab2.mp4' %}" type="video/mp4">
+                        </video>
+                    </div>
+                </div> 
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <div class="row g-4 my-7">
+            <div class="col-md-4">
+                <div class="stat-card text-center animate-on-scroll" data-animation="animate__flipInX">
+                    <div class="stat-number display-5 fw-bold">100+ Studies</div>
+                    <p class="text-muted mb-0">95% Customer Satisfaction</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stat-card text-center animate-on-scroll" data-animation="animate__flipInX">
+                    <div class="stat-number display-5 fw-bold">500K+ Sold</div>
+                    <p class="text-muted mb-0">Trusted by fitness enthusiasts</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stat-card text-center animate-on-scroll" data-animation="animate__flipInX">
+                    <div class="stat-number display-5 fw-bold">30+ Countries</div>
+                    <p class="text-muted mb-0">Delivering quality nutrition</p>
+                </div>
+            </div>
+            <!-- Repeat for other stats -->
+        </div>
+
+        <!-- Values Section -->
+        <div class="row g-4 my-7">
+            <div class="col-md-4 animate-on-scroll" data-animation="animate__fadeInLeft">
+                <div class="value-card text-center p-4">
+                    <div class="icon-wrapper mb-4">
+                        <div class="hexagon bg-primary">
+                            <i class="fas fa-microscope fa-2x text-white"></i>
+                        </div>
+                    </div>
+                    <h3 class="h2 mb-3">Scientific Innovation</h3>
+                    <p class="text-muted">Patented nutrient delivery systems</p>
+                </div>
+            </div>
+            <div class="col-md-4 animate-on-scroll" data-animation="animate__fadeInUp">
+                <div class="value-card text-center p-4">
+                    <div class="icon-wrapper mb-4">
+                        <div class="hexagon bg-success">
+                            <i class="fas fa-seedling fa-2x text-white"></i>
+                        </div>
+                    </div>
+                    <h3 class="h2 mb-3">Natural   Integrity</h3>
+                    <p class="text-muted">100% plant-based ingredients</p>
+                </div>
+            </div>
+
+            <div class="col-md-4 animate-on-scroll" data-animation="animate__fadeInUp">
+                <div class="value-card text-center p-4">
+                    <div class="icon-wrapper mb-4">
+                        <div class="hexagon bg-danger">
+                            <i class="fas fa-shield-alt fa-2x text-white"></i>
+                        </div>
+                    </div>
+                    <h3 class="h2 mb-3">Quality Assurance</h3>
+                    <p class="text-muted">7-step verification process</p>
+                </div>
+            </div>
+        
+            <!-- Repeat for other values -->
+        </div>
+
+        <!-- Enhanced Timeline -->
+        <div class="timeline my-7">
+            <h2 class="display-4 text-center mb-6">Our Journey</h2>
+            <div class="timeline-item animate-on-scroll" data-animation="animate__fadeInRight">
+                <div class="timeline-badge"></div>
+                <h3 class="h1 text-primary">2015</h3>
+                <p class="lead">Founded by nutritional science experts</p>
+            </div>
+            <div class="timeline-item animate-on-scroll" data-animation="animate__fadeInRight">
+                <div class="timeline-badge"></div>
+                <h3 class="h1 text-primary">2017</h3>
+                <p class="lead"> Advanced Formulations & Certifications </p>
+            </div>
+            <div class="timeline-item animate-on-scroll" data-animation="animate__fadeInRight">
+                <div class="timeline-badge"></div>
+                <h3 class="h1 text-primary">2019</h3>
+                <p class="lead">Sustainability & Innovation</p>
+            </div>
+            <div class="timeline-item animate-on-scroll" data-animation="animate__fadeInRight">
+                <div class="timeline-badge"></div>
+                <h3 class="h1 text-primary">2021</h3>
+                <p class="lead">Global Expansion & Digital Transformation</p>
+            </div>
+            <div class="timeline-item animate-on-scroll" data-animation="animate__fadeInRight">
+                <div class="timeline-badge"></div>
+                <h3 class="h1 text-primary">2023</h3>
+                <p class="lead">Best Supplments of the year award 2023</p>
+            </div>
+            <div class="timeline-item animate-on-scroll" data-animation="animate__fadeInRight">
+                <div class="timeline-badge"></div>
+                <h3 class="h1 text-primary">2025</h3>
+                <p class="lead">Next-Gen Protein Technology</p>
+            </div>
+            <!-- Other timeline items -->
+        </div>
+
+        <!-- Team Section -->
+        <div class="row g-4 my-7">
+            <div class="col-md-4 animate-on-scroll" data-animation="animate__zoomIn">
+                <div class="team-member-card">
+                    <img src="{% static 'images/dr.sarah.png' %}" 
+                         class="img-fluid" 
+                         alt="Dr. Sarah Johnson"
+                         loading="lazy">
+                    <div class="team-overlay">
+                        <h4 class="text-white">Dr. Sarah Johnson</h4>
+                        <div class="social-links mt-3">
+                            <a href="#" class="text-white me-3"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" class="text-white"><i class="fab fa-researchgate"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 animate-on-scroll" data-animation="animate__zoomIn">
+                <div class="team-member-card">
+                    <img src="{% static 'images/mike1.png' %}" 
+                         class="img-fluid" 
+                         alt="Mike Bellefoire"
+                         loading="lazy">
+                    <div class="team-overlay">
+                        <h4 class="text-white">Mike Bellefoire</h4>
+                        <div class="social-links mt-3">
+                            <a href="#" class="text-white me-3"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" class="text-white"><i class="fab fa-researchgate"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 animate-on-scroll" data-animation="animate__zoomIn">
+                <div class="team-member-card">
+                    <img src="{% static 'images/emma1.png' %}" 
+                         class="img-fluid" 
+                         alt="Dr. Sarah Johnson"
+                         loading="lazy">
+                    <div class="team-overlay">
+                        <h4 class="text-white">Dareen Robert</h4>
+                        <div class="social-links mt-3">
+                            <a href="#" class="text-white me-3"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" class="text-white"><i class="fab fa-researchgate"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Other team members -->
+        </div>
+
+        <!-- CTA Section -->
+        <div class="text-center my-7 animate-on-scroll" data-animation="animate__tada">
+            <h2 class="display-3 mb-5">Join the Revolution</h2>
+            <a href="/products" class="btn btn-lg btn-accent px-6 py-4 fs-3">
+                Explore Innovations 
+                <i class="fas fa-arrow-right ms-3"></i>
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock body %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if(entry.isIntersecting) {
+                const animation = entry.target.dataset.animation;
+                entry.target.classList.add('animate__animated', animation);
+            }
+        });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+
+    // Parallax effect
+    window.addEventListener('scroll', () => {
+        const scrolled = window.pageYOffset;
+        document.querySelector('.hero-section').style.backgroundPositionY = `${scrolled * 0.5}px`;
+    });
+});
+</script>
+{% endblock extra_js %}

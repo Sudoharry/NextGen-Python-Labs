@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 import os
+from django.contrib.messages import constants as messages  #.. Added for message successtion
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -38,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
 ]
 
 MIDDLEWARE = [
@@ -48,6 +51,11 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    # Added manually this middleware for allauth to work correctly
+    "allauth.account.middleware.AccountMiddleware",
+
+
 ]
 
 ROOT_URLCONF = 'Hello.urls'
@@ -124,10 +132,56 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-# Added manually
+# =-------Added manually------
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static")
 ] 
+
+# APPEND_SLASH = True
+
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+    # 'home.backends.EmailBackend', # ..Added after execution error so have to make sure i removed before we move forward
+]
+
+INSTALLED_APPS = [
+    # ...
+    'home.apps.HomeConfig',  # <-- This was added from the apps.py and added before applying for migrations.
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    # 'django.contrib.sessions.middleware.SessionMiddleware',
+    # 'django.contrib.messages.middleware.MessageMiddleware',
+]
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': ['profile', 'email'],
+        'AUTH_PARAMS': {'access_type': 'online'},
+    }
+}
+
+SITE_ID = 1
+
+# MESSAGE_TAGS = {
+#     messages.INFO: "",
+#     50: "critical",
+# }
+
+
+LOGIN_REDIRECT_URL = '/'
+
+# AUTH_USER_MODEL = "home.Register"  # Ensure Django uses your model for authentication

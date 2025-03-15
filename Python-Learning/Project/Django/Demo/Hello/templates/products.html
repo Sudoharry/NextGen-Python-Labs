@@ -1,8 +1,300 @@
-{% extends 'base.html'%}
+{% extends 'base.html' %}
+{% load static %}
 
-{% block title%}Products{% endblock title%}
+{% block title %}Nutrabay Gold Whey Protein{% endblock title %}
 
-{% block body%}
+{% block extra_css %}
+<style>
+    .product-container {
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 3rem;
+        border-radius: 18px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        background: white;
+    }
 
-This is Products block
-{% endblock body%}
+    .product-grid {
+        display: grid;
+        grid-template-columns: 1fr 1.5fr;
+        gap: 3rem;
+        align-items: start;
+    }
+
+    .product-images {
+        position: sticky;
+        top: 1rem;
+        border-radius: 18px;
+        overflow: hidden;
+    }
+
+    .main-image {
+        width: 100%;
+        height: 400px;
+        object-fit: contain;
+        background: #f8f9fa;
+        border-radius: 18px;
+        padding: 2rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .thumbnails {
+        display: flex;
+        gap: 1rem;
+        padding: 0.5rem;
+    }
+
+    .thumbnail-img {
+        width: 70px;
+        height: 70px;
+        object-fit: cover;
+        border-radius: 12px;
+        cursor: pointer;
+        border: 2px solid transparent;
+        transition: all 0.2s ease;
+    }
+
+    .thumbnail-img:hover,
+    .thumbnail-img.active {
+        border-color: #007bff;
+    }
+
+    .product-details {
+        padding-top: 1rem;
+    }
+
+    .product-title {
+        font-size: 1.8rem;
+        margin-bottom: 1.2rem;
+        line-height: 1.3;
+        color: #2c3e50;
+    }
+
+    .ratings {
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .price-section {
+        background: #f8f9fa;
+        padding: 1.5rem;
+        border-radius: 12px;
+        margin: 2rem 0;
+    }
+
+    .current-price {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #dc3545;
+    }
+
+    .original-price {
+        font-size: 1.2rem;
+        color: #6c757d;
+        text-decoration: line-through;
+    }
+
+    .stock-status {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin: 1.5rem 0;
+    }
+
+    .selection-group {
+        margin: 2rem 0;
+        padding: 1.5rem;
+        border: 1px solid #dee2e6;
+        border-radius: 12px;
+    }
+
+    .variant-options {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.8rem;
+        margin-top: 1rem;
+    }
+
+    .variant-option {
+        padding: 0.6rem 1.2rem;
+        border: 1px solid #dee2e6;
+        border-radius: 25px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        font-size: 0.95rem;
+    }
+
+    .variant-option:hover,
+    .variant-option.active {
+        border-color: #007bff;
+        background-color: rgba(0,123,255,0.1);
+        color: #007bff;
+    }
+
+    .add-to-cart {
+        padding: 1rem 2.5rem;
+        font-size: 1.1rem;
+        border-radius: 25px;
+        transition: all 0.2s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.8rem;
+    }
+
+    .special-offers {
+        margin-top: 2rem;
+        border-radius: 12px;
+        padding: 1.5rem;
+    }
+</style>
+{% endblock extra_css %}
+
+{% block body %}
+<div class="container">
+    <div class="product-container">
+        <div class="product-grid">
+            <!-- Left Column - Product Images -->
+            <div class="product-images">
+                <img src="{% static 'images/product1.png' %}" 
+                     class="main-image" 
+                     alt="Nutrabay Gold Whey Protein">
+                
+                <div class="thumbnails">
+                    <img src="{% static 'images/product1.png' %}" 
+                         class="thumbnail-img"
+                         alt="Thumbnail 1">
+                    <img src="{% static 'images/product1.png' %}" 
+                         class="thumbnail-img"
+                         alt="Thumbnail 2">
+                </div>
+            </div>
+
+            <!-- Right Column - Product Details -->
+            <div class="product-details">
+                <h1 class="product-title">Nutrabay Gold 100% Whey Protein Concentrate</h1>
+                
+                <div class="ratings">
+                    <span class="text-warning">⭐⭐⭐⭐⭐</span>
+                    <span class="text-muted">725 Ratings & 2.5k Reviews</span>
+                </div>
+
+                <div class="price-section">
+                    <div class="d-flex align-items-center gap-3">
+                        <span class="current-price">₹2,349</span>
+                        <span class="original-price">₹5,340</span>
+                        <span class="badge bg-danger">28% OFF</span>
+                    </div>
+                    <div class="delivery-info mt-2">
+                        <span class="text-success">
+                            <i class="fas fa-shield-alt me-2"></i>Inclusive of all taxes
+                        </span>
+                        <span class="text-success ms-3">
+                            <i class="fas fa-truck me-2"></i>Free Delivery
+                        </span>
+                    </div>
+                </div>
+
+                <div class="stock-status">
+                    <span class="text-success">
+                        <i class="fas fa-check-circle me-2"></i>In stock
+                    </span>
+                    <button class="add-to-cart btn btn-primary">
+                        <i class="fas fa-cart-plus"></i>Add to Cart
+                    </button>
+                </div>
+
+                <div class="selection-group">
+                    <h4>Flavor:</h4>
+                    <div class="variant-options">
+                        <div class="variant-option active">Rich Chocolate Creme</div>
+                        <div class="variant-option">Cafe Mocha</div>
+                        <div class="variant-option">Double Rich Chocolate</div>
+                        <div class="variant-option">Vanilla Ice Cream</div>
+                    </div>
+                </div>
+
+                <div class="selection-group">
+                    <h4>Weight:</h4>
+                    <div class="variant-options">
+                        <div class="variant-option active">1 kg (2.2 lb)</div>
+                        <div class="variant-option">500 g (1.1 lb)</div>
+                        <div class="variant-option">2 kg (4.4 lb)</div>
+                    </div>
+                </div>
+
+                <div class="special-offers alert alert-info">
+                    <h4 class="d-flex align-items-center">
+                        <i class="fas fa-gift me-2"></i>Special Offer
+                    </h4>
+                    <p class="mb-0">Free Nutrabay 700ml Shaker Bottle with cart value > ₹3,499</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock body %}
+
+{% block extra_js %}
+<script>
+$(document).ready(function() {
+    // Image Thumbnail Interaction
+    $('.thumbnail-img').click(function() {
+        $('.thumbnail-img').removeClass('active');
+        $(this).addClass('active');
+        const mainSrc = $(this).attr('src');
+        $('.main-image').attr('src', mainSrc).hide().fadeIn(300);
+    });
+
+    // Variant Selection
+    $('.variant-option').click(function() {
+        $(this).siblings().removeClass('active');
+        $(this).addClass('active');
+    });
+
+    // Add to Cart Handler
+    $('.add-to-cart').click(function() {
+        const selectedFlavor = $('.variant-options:first .active').text();
+        const selectedWeight = $('.variant-options:last .active').text();
+        
+        if(!selectedFlavor || !selectedWeight) {
+            showAlert('danger', 'Please select flavor and weight');
+            return;
+        }
+
+        addToCart({
+            product: "Nutrabay Gold Whey Protein",
+            flavor: selectedFlavor,
+            weight: selectedWeight,
+            price: 2349
+        });
+    });
+
+    function addToCart(data) {
+        $.ajax({
+            url: '/api/add-to-cart/',
+            method: 'POST',
+            data: data,
+            success: function(response) {
+                showAlert('success', 'Item added to cart successfully');
+                updateCartCounter(response.cart_count);
+            },
+            error: function() {
+                showAlert('danger', 'Error adding item to cart');
+            }
+        });
+    }
+
+    function showAlert(type, message) {
+        const alert = $(`<div class="alert alert-${type} alert-dismissible fade show" role="alert">
+            ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>`);
+        
+        $('.product-details').prepend(alert);
+        setTimeout(() => alert.alert('close'), 3000);
+    }
+});
+</script>
+{% endblock extra_js %}

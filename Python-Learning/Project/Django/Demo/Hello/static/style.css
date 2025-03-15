@@ -2,6 +2,7 @@
 
 /* Base class */
 .callout {
+    
     padding: 15px;
     margin: 10px 0;
     border: 1px solid #eee;
@@ -26,4 +27,19 @@
     border-left-color: #d9534f;
     background-color: #f2dede;
     color: #a94442;
+}
+
+
+footer {
+    background-color: #343a40;
+    color: #fff;
+}
+
+footer a {
+    color: #fff;
+    transition: color 0.3s;
+}
+
+footer a:hover {
+    color: #f8d210;
 }

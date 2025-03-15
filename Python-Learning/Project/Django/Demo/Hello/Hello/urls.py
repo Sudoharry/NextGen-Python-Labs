@@ -17,7 +17,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include # <-- Add include
 
+
+admin.site.site_header = "JSR Supplements Admin"
+admin.site.site_title = "JSR Supplements Admin Portal"
+admin.site.index_title = "Welcome to JSR Supplements Portal"
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('home.urls'))  # <-- Add ('' for home.urls)
+    path('', include('home.urls')),  # <-- Add ('' for home.urls)
+    path('accounts/', include('allauth.urls')),
+    
 ]

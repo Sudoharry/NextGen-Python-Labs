@@ -1,14 +1,45 @@
-
+{% load static socialaccount %} 
 
 <!doctype html>
 <html lang="en">
 <head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+  <style>
+      :root {
+          --primary-color: #007bff;
+          --secondary-color: #6c757d;
+          --success-color: #28a745;
+          --danger-color: #dc3545;
+          --text-dark: #2c3e50;
+          --text-light: #f8f9fa;
+      }
+      
+      body {
+          font-family: 'Segoe UI', system-ui, sans-serif;
+          line-height: 1.6;
+          color: var(--text-dark);
+      }
+      
+      .hover-scale {
+          transition: transform 0.3s ease;
+      }
+      
+      .hover-scale:hover {
+          transform: translateY(-5px);
+      }
+  </style>
+
+  {% block extra_css %}{% endblock %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title> {% block title %}{% endblock title %} | JSR Supplements </title>  
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+    {% comment %} <! -- Contact us --> {% endcomment %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
@@ -22,46 +53,162 @@
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <link rel="icon" type="image/png" sizes="32x32" href="static/images/favicon.ico">
+
+
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">JSR Supplements</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">JSR Supplements</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/about">About Us</a>
-              </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Supplements
-                </a>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="/products">BCAA Powder</a></li>
-                  <li><a class="dropdown-item" href="#">Whey Protein </a></li>
-                  <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item" href="#">Plant Protein</a></li>
-                </ul>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/contact">Contact Us</a>
-              </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/about/">About Us</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                        Supplements
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/products">BCAA Powder</a></li>
+                        <li><a class="dropdown-item" href="#">Whey Protein</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#">Plant Protein</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/contact">Contact Us</a>
+                </li>
             </ul>
-            <form class="d-flex" role="search">
-              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-              <button class="btn btn-outline-success" type="submit">Search</button>
+
+            <!-- Search Bar -->
+            <form class="d-flex me-3" role="search">
+                <input class="form-control me-2" style="width: 1050px;" type="search" placeholder="Search Products, Categories, Brands" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
             </form>
-          </div>
+
+            <!-- Login / Logout & Cart Buttons -->
+            <div class="btn-group">
+                {% if user.is_authenticated %}
+                    <a href="{% url 'logout' %}" class="btn btn-danger">Logout</a>
+                {% else %}
+                    <a href="{% url 'login_register' %}" class="btn btn-primary">Login</a>
+                {% endif %}
+                <a href="/checkout" class="btn btn-warning ms-2">Cart</a>
+            </div>
         </div>
+    </div>
 </nav>
 
+{% comment %} #.. For login
+{% if user.is_authenticated %}
+    <a href="{% url 'logout' %}" class="btn btn-danger">Logout</a>
+{% else %}
+    <a href="{% url 'login_register' %}" class="btn btn-primary">Login</a>
+{% endif %} {% endcomment %}
+
+{% comment %} For message shows {% endcomment %}
+{% if messages %}
+{% for message in messages %}
+ 
+<div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+  {{ message }}
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
+{% endif %}
+
 {% block body %} {% endblock body %}
+
+ <!-- Bootstrap JS and other scripts -->
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+ {% block extra_js %}{% endblock %}
+
+ <script>
+  document.addEventListener('DOMContentLoaded', function() {
+      const animateElements = document.querySelectorAll('.animate-on-scroll');
+      
+      const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                  entry.target.classList.add('animate__animated');
+              }
+          });
+      }, { threshold: 0.1 });
+
+      animateElements.forEach(element => {
+          observer.observe(element);
+      });
+  });
+</script>
+
+ <footer class="bg-dark text-light py-5 mt-5">
+  <div class="container">
+      <div class="row">
+          <!-- Company Info & Contact Details -->
+          <div class="col-md-4">
+              <h5>JSR Supplements</h5>
+              <p>Experience premium and high-quality supplements with JSR Supplements. We are committed to providing top-tier nutritional products to support your fitness and wellness journey. Trust us for purity, effectiveness, and excellence in every supplement..</p>
+              <p><i class="fas fa-map-marker-alt"></i> Plot no: 19, Yogesh Building, Kutch Kala Road, Gandhidham, Kutch (370201)</p>
+              <p><i class="fas fa-phone"></i> +91- 8849964295</p>
+              <p><i class="fas fa-envelope"></i> support@jsrsupplements.com</p>
+          </div>
+
+          <!-- Quick Links -->
+          <div class="col-md-4">
+              <h5>Quick Links</h5>
+              <ul class="list-unstyled">
+                  <li><a href="/" class="text-light text-decoration-none">Home</a></li>
+                  <li><a href="/about" class="text-light text-decoration-none">About Us</a></li>
+                  <li><a href="/products" class="text-light text-decoration-none">Our Products</a></li>
+                  <li><a href="/blogs" class="text-light text-decoration-none">Blog</a></li>
+                  <li><a href="/faqs" class="text-light text-decoration-none">FAQs</a></li>
+                  <li><a href="/contact" class="text-light text-decoration-none">Contact Us</a></li>
+              </ul>
+          </div>
+
+          <!-- Customer Service -->
+          <div class="col-md-4">
+              <h5>Customer Service</h5>
+              <ul class="list-unstyled">
+                  <li><a href="/shipping" class="text-light text-decoration-none">Shipping & Delivery</a></li>
+                  <li><a href="/returns" class="text-light text-decoration-none">Returns & Exchanges</a></li>
+                  <li><a href="/privacy-policy" class="text-light text-decoration-none">Privacy Policy</a></li>
+                  <li><a href="/terms" class="text-light text-decoration-none">Terms & Conditions</a></li>
+                  <li><a href="/support" class="text-light text-decoration-none">Help & Support</a></li>
+              </ul>
+          </div>
+      </div>
+
+      <hr class="bg-light">
+
+      <!-- Social Media Links -->
+      <div class="text-center">
+          <h5>Follow Us</h5>
+          <a href="#" class="text-light me-3"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="text-light me-3"><i class="fab fa-twitter"></i></a>
+          <a href="#" class="text-light me-3"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="text-light me-3"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#" class="text-light"><i class="fab fa-youtube"></i></a>
+      </div>
+
+      <div class="text-center mt-3">
+          <p class="mb-0">&copy; 2025 JSR Supplements. All Rights Reserved.</p>
+      </div>
+  </div>
+</footer>
 
 </body>
 </html>

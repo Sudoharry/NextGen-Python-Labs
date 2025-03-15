@@ -1,7 +1,241 @@
-{% extends 'base.html'%}
+{% extends 'base.html' %}
+{% load static %}
 
-{% block title%}Contact Us{% endblock title%}
+{% block title %}Contact Us{% endblock title %}
 
-{% block body%}
+{% block extra_css %}
+<style>
+    .contact-card {
+        max-width: 600px;
+        margin: 2rem auto;
+        padding: 2rem;
+        border-radius: 18px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    
+    .form-icon-container {
+        position: relative;
+    }
+    
+    .form-icon {
+        position: absolute;
+        right: 15px;
+        top: 70%;
+        transform: translateY(-50%);
+        color: #007bff;
+        pointer-events: none;
+    }
+    
+    .form-control {
+        padding-right: 40px !important;
+    }
+    
+    .character-counter {
+        font-size: 0.9rem;
+        text-align: right;
+        color: #6c757d;
+    }
+    
+    .character-counter.warning {
+        color: #dc3545;
+    }
+</style>
+{% endblock extra_css %}
 
-{% endblock body%}
+{% block body %}
+<div class="container">
+    {% comment %} <img src="/static/images/image3.png" class="d-block w-100 carousel-img" alt="..."> {% endcomment %}
+    <h1 class="my-4 text-center">  How Can We Assist You?  </h1>
+    <div class="contact-card bg-white">
+        <h2 class="mb-4 text-center">Contact Us</h2>
+        
+        <!-- Alert Messages -->
+        <div id="alert-container" class="mb-4" style="display: none;">
+            <div class="alert alert-dismissible fade show">
+                <span class="alert-message"></span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        </div>
+
+        <form id="contactForm" class="needs-validation" novalidate enctype="multipart/form-data" method="post" action="/contact/">
+            {% csrf_token %} 
+            {{ form.as_p }}
+            
+            <!-- Name Field -->
+            <div class="mb-4 position-relative">
+                <label for="name" class="form-label">Full Name</label>
+                <input type="text" class="form-control py-2" id="name" 
+                       placeholder="John Doe" required
+                       pattern="[A-Za-z ]{3,}" name="name">
+                <i class="fas fa-user form-icon"></i>
+                <div class="invalid-feedback">
+                    Please enter a valid name (min 3 characters)
+                </div>
+            </div>
+
+            <!-- Email Field -->
+            <div class="mb-4 position-relative">
+                <label for="email" class="form-label">Email Address</label>
+                <input type="email" class="form-control py-2" id="email" name="email" 
+                       placeholder="john@example.com" required>
+                <i class="fas fa-envelope form-icon"></i>
+                <div class="invalid-feedback">
+                    Please enter a valid email address
+                </div>
+            </div>
+
+            <!-- Phone Number with Masking -->
+            <div class="mb-4 position-relative">
+                <label for="phone" class="form-label">Contact Number</label>
+                <input type="tel" class="form-control py-2" id="phone" name="phone"
+                       placeholder="+91 12345 67890" required
+                       data-inputmask="'mask': '+99 99999 99999'">
+                <i class="fas fa-phone form-icon"></i>
+                <div class="invalid-feedback">
+                    Please enter a valid 10-digit phone number
+                </div>
+            </div>
+
+            <!-- Subject -->
+            <div class="mb-4">
+                <label for="subject" class="form-label">Subject</label>
+                <select class="form-select py-2" id="subject" name="subject" required>
+                    <option value="">Choose a subject</option>
+                    <option>General Inquiry</option>
+                    <option>Technical Support</option>
+                    <option>Sales Question</option>
+                    <option>Feedback</option>
+                </select>
+                <div class="invalid-feedback">
+                    Please select a subject
+                </div>
+            </div>
+
+            <!-- Message with Character Counter -->
+            <div class="mb-4">
+                <label for="message" class="form-label">Message</label>
+                <textarea class="form-control" id="message" name="message" 
+                          rows="4" placeholder="Your message..." 
+                          maxlength="500" required></textarea>
+                <div class="character-counter">
+                    <span id="charCount">0</span>/500 characters
+                </div>
+                <div class="invalid-feedback">
+                    Please enter your message
+                </div>
+            </div>
+
+            <!-- File Upload -->
+            {% comment %} <div class="mb-4">
+                <label for="attachment" class="form-label">Attachment (optional)</label>
+                <input type="file" class="form-control" id="attachment" name="attachment"
+                       accept=".pdf,.doc,.docx,.jpg,.png">
+            </div> {% endcomment %}
+
+            <!-- CAPTCHA -->
+            <div class="mb-4 g-recaptcha" 
+                data-sitekey="6LdJPPMqAAAAAL1NUEgM6ZDMMnEHKqlujlbU0yt4"
+                data-callback="onCaptchaSuccess"
+                data-expired-callback="onCaptchaExpired"></div>
+
+            <!-- Terms Checkbox -->
+            <div class="mb-4 form-check">
+                <input type="checkbox" class="form-check-input" id="terms"  required>
+                <label class="form-check-label" for="terms">
+                    I agree to the terms and conditions
+                </label>
+                <div class="invalid-feedback">
+                    You must agree before submitting
+                </div>
+            </div>
+
+            <button class="btn btn-primary w-100 py-2" type="submit">
+                <i class="fas fa-paper-plane me-2"></i>Send Message
+            </button>
+
+            <div class="mt-4 text-center text-muted">
+                <small>
+                    <i class="fas fa-lock me-1"></i>
+                    Your information is protected with SSL encryption
+                </small>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock body %}
+
+{% block extra_js %}
+<!-- Required Libraries -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/inputmask/5.0.8/jquery.inputmask.min.js"></script>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+<script>
+$(document).ready(function() {
+    // Phone Number Masking
+    $('#phone').inputmask();
+
+    // Character Counter
+    $('#message').on('input', function() {
+        const max = 500;
+        const current = $(this).val().length;
+        $('#charCount').text(current);
+        $('.character-counter').toggleClass('warning', current > max * 0.9);
+    });
+
+    // AJAX Form Submission
+    $('#contactForm').on('submit', function(e) {
+        e.preventDefault();
+        const form = $(this);
+        const alertContainer = $('#alert-container');
+        
+        if (form[0].checkValidity() === false) {
+            e.stopPropagation();
+            form.addClass('was-validated');
+            return;
+        }
+
+        const formData = new FormData(form[0]);
+        formData.append('g-recaptcha-response', grecaptcha.getResponse());
+
+        $.ajax({
+            url: "{% url 'contact' %}",
+            method: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+                showAlert('success', response.message);
+                form[0].reset();
+                form.removeClass('was-validated');
+                grecaptcha.reset();
+            },
+            error: function(xhr) {
+                const error = xhr.responseJSON?.error || 'An error occurred';
+                showAlert('danger', error);
+            }
+        });
+    });
+
+    function showAlert(type, message) {
+        const alert = $('#alert-container .alert');
+        alertContainer.show();
+        alert.removeClass('alert-success alert-danger')
+              .addClass(`alert-${type}`)
+              .find('.alert-message').text(message);
+        
+        setTimeout(() => alertContainer.hide(), 5000);
+    }
+});
+
+// CAPTCHA Callbacks
+function onCaptchaSuccess(token) {
+    $('#contactForm button[type="submit"]').prop('disabled', false);
+}
+
+function onCaptchaExpired() {
+    $('#contactForm button[type="submit"]').prop('disabled', true);
+}
+</script>
+{% endblock extra_js %}

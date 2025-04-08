@@ -1,0 +1,15 @@
+body.dark-mode {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+.jumbotron.dark-mode {
+  background-color: #1e1e1e;
+  color: #ffffff;
+}
+
+.btn-dark-mode {
+  background-color: #333;
+  color: white;
+  border: 1px solid white;
+}

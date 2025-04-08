@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Confirm Deletion</h2>
+<p>Are you sure you want to delete <strong>{{ employee.name }}</strong>?</p>
+
+<form method="POST">
+    {% csrf_token %}
+    <label for="confirmation_name">Type the employee's name to confirm:</label>
+    <input type="text" name="confirmation_name" required>
+    
+    <button type="submit">Confirm Delete</button>
+    <a href="{% url 'employee_list' %}">Cancel</a>
+</form>
+
+{% if messages %}
+    <ul>
+        {% for message in messages %}
+            <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+{% endblock %}

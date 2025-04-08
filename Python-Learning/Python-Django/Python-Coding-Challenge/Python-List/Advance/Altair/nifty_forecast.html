@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    #vis.vega-embed {
+      width: 100%;
+      display: flex;
+    }
+
+    #vis.vega-embed details,
+    #vis.vega-embed details summary {
+      position: relative;
+    }
+  </style>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vega-lite@5.20.1"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+</head>
+<body>
+  <div id="vis"></div>
+  <script>
+    (function(vegaEmbed) {
+      var spec = {"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "data": {"name": "data-38004f554033e5e1a7ed58500569cfb0"}, "mark": {"type": "line"}, "encoding": {"x": {"field": "Date", "type": "temporal"}, "y": {"field": "Forecasted_Price", "type": "quantitative"}}, "height": 400, "title": "\ud83d\udcc8 NIFTY 50 Forecast - Next 30 Days", "width": 700, "$schema": "https://vega.github.io/schema/vega-lite/v5.20.1.json", "datasets": {"data-38004f554033e5e1a7ed58500569cfb0": [{"Date": "2025-04-01T00:00:00", "Forecasted_Price": 154.7940561735918}, {"Date": "2025-04-02T00:00:00", "Forecasted_Price": 305.2393628793816}, {"Date": "2025-04-03T00:00:00", "Forecasted_Price": 452.9633754297024}, {"Date": "2025-04-04T00:00:00", "Forecasted_Price": 600.1111065799757}, {"Date": "2025-04-05T00:00:00", "Forecasted_Price": 748.6659565242986}, {"Date": "2025-04-06T00:00:00", "Forecasted_Price": 905.6616981447814}, {"Date": "2025-04-07T00:00:00", "Forecasted_Price": 1054.7336091901498}, {"Date": "2025-04-08T00:00:00", "Forecasted_Price": 1204.1168328828178}, {"Date": "2025-04-09T00:00:00", "Forecasted_Price": 1351.0349196036855}, {"Date": "2025-04-10T00:00:00", "Forecasted_Price": 1496.6199511342156}, {"Date": "2025-04-11T00:00:00", "Forecasted_Price": 1646.300251133361}, {"Date": "2025-04-12T00:00:00", "Forecasted_Price": 1790.7017538234438}, {"Date": "2025-04-13T00:00:00", "Forecasted_Price": 1938.954900370776}, {"Date": "2025-04-14T00:00:00", "Forecasted_Price": 2093.983821624385}, {"Date": "2025-04-15T00:00:00", "Forecasted_Price": 2241.4375567917295}, {"Date": "2025-04-16T00:00:00", "Forecasted_Price": 2390.6633970536154}, {"Date": "2025-04-17T00:00:00", "Forecasted_Price": 2544.484503967125}, {"Date": "2025-04-18T00:00:00", "Forecasted_Price": 2692.2324970537543}, {"Date": "2025-04-19T00:00:00", "Forecasted_Price": 2839.0631832600784}, {"Date": "2025-04-20T00:00:00", "Forecasted_Price": 2985.91611604737}, {"Date": "2025-04-21T00:00:00", "Forecasted_Price": 3136.2310356675252}, {"Date": "2025-04-22T00:00:00", "Forecasted_Price": 3278.3924896235853}, {"Date": "2025-04-23T00:00:00", "Forecasted_Price": 3426.971219280973}, {"Date": "2025-04-24T00:00:00", "Forecasted_Price": 3569.6818719151024}, {"Date": "2025-04-25T00:00:00", "Forecasted_Price": 3719.1517479033632}, {"Date": "2025-04-26T00:00:00", "Forecasted_Price": 3871.7627630038382}, {"Date": "2025-04-27T00:00:00", "Forecasted_Price": 4028.2428184998466}, {"Date": "2025-04-28T00:00:00", "Forecasted_Price": 4178.092442008684}, {"Date": "2025-04-29T00:00:00", "Forecasted_Price": 4328.084107215156}, {"Date": "2025-04-30T00:00:00", "Forecasted_Price": 4477.018345033358}]}};
+      var embedOpt = {"mode": "vega-lite"};
+
+      function showError(el, error){
+          el.innerHTML = ('<div style="color:red;">'
+                          + '<p>JavaScript Error: ' + error.message + '</p>'
+                          + "<p>This usually means there's a typo in your chart specification. "
+                          + "See the javascript console for the full traceback.</p>"
+                          + '</div>');
+          throw error;
+      }
+      const el = document.getElementById('vis');
+      vegaEmbed("#vis", spec, embedOpt)
+        .catch(error => showError(el, error));
+    })(vegaEmbed);
+
+  </script>
+</body>
+</html>

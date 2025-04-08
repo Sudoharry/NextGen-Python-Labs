@@ -1,0 +1,5 @@
+pip install osmnx geopandas shapely matplotlib
+pip install prettymaps
+
+# Create a virtual environment
+python3.10 -m venv prettymaps-env

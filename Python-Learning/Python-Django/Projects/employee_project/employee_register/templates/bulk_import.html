@@ -1,0 +1,22 @@
+{% extends "employee_register/base.html" %} 
+
+{% block content %}
+<div class="container">
+    <h2>Bulk Import Employees</h2>
+    
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-success">Upload</button>
+    </form>
+    
+    <hr>
+    <a href="{% url 'employee_list' %}" class="btn btn-secondary">Back to Employee List</a>
+</div>
+{% endblock %}

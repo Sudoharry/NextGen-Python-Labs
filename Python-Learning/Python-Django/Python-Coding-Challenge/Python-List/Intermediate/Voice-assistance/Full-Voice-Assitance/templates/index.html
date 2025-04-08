@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Advanced Voice Assistant</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @keyframes particle-flow {
+      0% { transform: translateY(0) scale(0); opacity: 0; }
+      50% { opacity: 1; }
+      100% { transform: translateY(-100px) scale(1); opacity: 0; }
+    }
+
+    @keyframes waveform {
+      0% { transform: scaleY(0.2); }
+      100% { transform: scaleY(1); }
+    }
+
+    .waveform-bar {
+      animation: waveform 0.8s ease-in-out infinite alternate;
+      transform-origin: bottom;
+    }
+
+    .particle {
+      @apply absolute rounded-full;
+      animation: particle-flow 1.5s ease-out forwards;
+    }
+
+    .mirror-reflection {
+      transform: scaleY(-1) translateY(10px);
+      mask-image: linear-gradient(to bottom, black 20%, transparent 90%);
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 h-screen flex items-center justify-center overflow-hidden">
+  <canvas id="particleCanvas" class="absolute inset-0 w-full h-full"></canvas>
+
+  <div class="flex flex-col md:flex-row gap-8 items-start justify-center z-10">
+    <!-- Voice Assistant UI -->
+    <div class="mirror-effect relative group perspective-1000">
+      <div id="mainContainer" class="relative backdrop-blur-xl bg-white/5 rounded-2xl p-8 shadow-2xl border border-white/10 transition-all duration-300 hover:scale-[1.02] hover:rotate-x-[5deg] hover:rotate-y-[5deg] w-[90vw] md:w-[400px] max-w-xl">
+        <h1 class="text-4xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent mb-8 text-center">
+          Voice Assistant
+        </h1>
+
+        <input id="textInput" type="text" placeholder="Ask me anything..." class="w-full px-4 py-3 mb-4 text-white bg-white/10 rounded-xl border border-white/20 focus:outline-none focus:ring-2 focus:ring-cyan-400 placeholder-white/50"/>
+
+        <button id="startButton" class="relative overflow-hidden w-full px-8 py-4 rounded-xl bg-gradient-to-br from-blue-600 to-cyan-500 hover:from-purple-600 hover:to-pink-500 text-white font-semibold transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg shadow-blue-500/30 hover:shadow-purple-500/40">
+          <span class="relative z-10">Start Listening</span>
+          <div class="absolute inset-0 bg-gradient-to-r from-white/10 to-transparent opacity-0 hover:opacity-100 transition-opacity"></div>
+        </button>
+
+        <div class="mt-6 w-full h-32 mx-auto relative">
+          <canvas id="waveform" class="w-full h-full rounded-xl border border-white/10 backdrop-blur-sm"></canvas>
+        </div>
+      </div>
+
+      <!-- Mirror Reflection -->
+      <div class="mirror-reflection absolute inset-0 opacity-30 blur-sm pointer-events-none"></div>
+    </div>
+
+    <!-- Chat History UI -->
+    <div class="mirror-effect relative group perspective-1000">
+      <div class="relative backdrop-blur-xl bg-white/5 rounded-2xl p-6 shadow-2xl border border-white/10 w-[90vw] md:w-[400px] max-w-xl h-[500px] overflow-y-auto space-y-3">
+        <h2 class="text-2xl font-semibold text-center text-cyan-300 mb-4">Chat History</h2>
+        <div id="response" class="text-white text-base space-y-2"></div>
+      </div>
+      <div class="mirror-reflection absolute inset-0 opacity-30 blur-sm pointer-events-none"></div>
+    </div>
+  </div>
+
+  <script>
+    const particleCanvas = document.getElementById('particleCanvas');
+    const waveformCanvas = document.getElementById('waveform');
+    const startButton = document.getElementById('startButton');
+    const mainContainer = document.getElementById('mainContainer');
+    const textInput = document.getElementById('textInput');
+    const responseDiv = document.getElementById('response');
+    let isListening = false;
+
+    class ParticleSystem {
+      constructor(canvas) {
+        this.canvas = canvas;
+        this.ctx = canvas.getContext('2d');
+        this.particles = [];
+        this.running = false;
+        this.resize();
+        window.addEventListener('resize', () => this.resize());
+      }
+
+      resize() {
+        this.canvas.width = window.innerWidth;
+        this.canvas.height = window.innerHeight;
+      }
+
+      createParticles(x, y) {
+        for (let i = 0; i < 15; i++) {
+          this.particles.push({
+            x: x + Math.random() * 40 - 20,
+            y: y + Math.random() * 40 - 20,
+            radius: Math.random() * 3 + 1,
+            color: `rgba(100, 255, 255, ${Math.random() * 0.5})`,
+            velocity: {
+              x: (Math.random() - 0.5) * 3,
+              y: (Math.random() - 1) * 5
+            },
+            life: 1
+          });
+        }
+      }
+
+      animate() {
+        if (!this.running) return;
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.particles.forEach((p, i) => {
+          p.x += p.velocity.x;
+          p.y += p.velocity.y;
+          p.life -= 0.02;
+
+          this.ctx.beginPath();
+          this.ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+          this.ctx.fillStyle = p.color;
+          this.ctx.fill();
+
+          if (p.life <= 0) this.particles.splice(i, 1);
+        });
+
+        requestAnimationFrame(() => this.animate());
+      }
+    }
+
+    class AudioVisualizer {
+      constructor(canvas) {
+        this.canvas = canvas;
+        this.ctx = canvas.getContext('2d');
+        this.analyser = null;
+        this.dataArray = null;
+        this.running = false;
+        this.resize();
+      }
+
+      async start() {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        const audioContext = new AudioContext();
+        const source = audioContext.createMediaStreamSource(stream);
+        this.analyser = audioContext.createAnalyser();
+        source.connect(this.analyser);
+        this.analyser.fftSize = 256;
+        this.dataArray = new Uint8Array(this.analyser.frequencyBinCount);
+        this.running = true;
+        this.visualize();
+      }
+
+      visualize() {
+        if (!this.running) return;
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.analyser.getByteFrequencyData(this.dataArray);
+
+        const barWidth = (this.canvas.width / this.dataArray.length) * 2;
+        let x = 0;
+
+        this.dataArray.forEach(value => {
+          const height = value / 2;
+          const gradient = this.ctx.createLinearGradient(0, this.canvas.height, 0, 0);
+          gradient.addColorStop(0, '#4fd1c5');
+          gradient.addColorStop(1, '#81e6d9');
+
+          this.ctx.fillStyle = gradient;
+          this.ctx.fillRect(x, this.canvas.height - height, barWidth, height);
+          x += barWidth + 2;
+        });
+
+        requestAnimationFrame(() => this.visualize());
+      }
+
+      resize() {
+        this.canvas.width = this.canvas.offsetWidth;
+        this.canvas.height = this.canvas.offsetHeight;
+      }
+    }
+
+    const particleSystem = new ParticleSystem(particleCanvas);
+    const visualizer = new AudioVisualizer(waveformCanvas);
+
+    startButton.addEventListener('click', async () => {
+      isListening = !isListening;
+
+      const rect = startButton.getBoundingClientRect();
+      particleSystem.createParticles(rect.left + rect.width / 2, rect.top + rect.height / 2);
+
+      startButton.classList.toggle('from-purple-600', isListening);
+      startButton.classList.toggle('to-pink-500', isListening);
+      startButton.querySelector('span').textContent = isListening ? 'Stop Listening' : 'Start Listening';
+
+      mainContainer.style.transform =
+        `rotateX(${isListening ? 10 : 0}deg) rotateY(${isListening ? 10 : 0}deg)`;
+
+      if (isListening) {
+        await visualizer.start();
+        particleSystem.running = true;
+        particleSystem.animate();
+        await startListening();
+      } else {
+        visualizer.running = false;
+        particleSystem.running = false;
+      }
+    });
+
+    mainContainer.addEventListener('mousemove', (event) => {
+      if (!isListening) {
+        const rect = mainContainer.getBoundingClientRect();
+        const x = (event.clientX - rect.left) / rect.width - 0.5;
+        const y = (event.clientY - rect.top) / rect.height - 0.5;
+        mainContainer.style.transform = `rotateX(${y * -10}deg) rotateY(${x * 10}deg) scale(1.02)`;
+      }
+    });
+
+    mainContainer.addEventListener('mouseleave', (event) => {
+      if (!isListening) {
+        event.target.style.transform = 'rotateX(0deg) rotateY(0deg) scale(1)';
+      }
+    });
+
+    textInput.addEventListener('keydown', async (e) => {
+      if (e.key === 'Enter' && textInput.value.trim()) {
+        const userQuery = textInput.value.trim();
+        addChatBubble("User", userQuery);
+        textInput.value = '';
+        await sendVoiceQuery(userQuery);
+      }
+    });
+
+    function addChatBubble(role, message) {
+      const div = document.createElement("div");
+      div.className = role === "User" ? "text-right" : "text-left";
+      div.innerHTML = `<span class="font-semibold ${role === 'User' ? 'text-cyan-300' : 'text-pink-300'}">${role}:</span> <span>${message}</span>`;
+      responseDiv.appendChild(div);
+      responseDiv.scrollTop = responseDiv.scrollHeight;
+    }
+
+    async function sendVoiceQuery(query) {
+      try {
+        const res = await fetch("http://127.0.0.1:8000/ask", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ query })
+        });
+        const data = await res.json();
+        addChatBubble("Assistant", data.response);
+      } catch (error) {
+        console.error("Error:", error);
+        addChatBubble("Assistant", "Sorry, something went wrong.");
+      }
+    }
+
+    async function startListening() {
+      try {
+        const response = await fetch('http://127.0.0.1:8000/voice', {
+          method: 'POST'
+        });
+        const data = await response.json();
+        addChatBubble("User", "[Voice Input]");
+        addChatBubble("Assistant", data.response);
+      } catch (error) {
+        console.error("Listening error:", error);
+        addChatBubble("Assistant", "Couldn't process your voice.");
+      }
+    }
+  </script>
+</body>
+</html>

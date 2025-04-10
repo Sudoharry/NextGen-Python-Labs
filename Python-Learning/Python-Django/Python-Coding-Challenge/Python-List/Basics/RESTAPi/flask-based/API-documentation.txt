@@ -1,0 +1,151 @@
+📚 Book Management API Documentation
+
+ > This is a simple RESTful API built with Flask for managing books in memory.
+
+🚀 Base URL 
+
+> http://localhost:5000
+
+
+📘 Endpoints
+
+🔍 GET /books
+
+> Description: Get a list of all books.
+
+> Response:
+
+  200 OK
+
+  """
+  [
+  {
+    "id": 1,
+    "title": "Two States",
+    "author": "Chetan Bhagat"
+  },
+  {
+    "id": 2,
+    "title": "Rich Dad Poor Dad",
+    "author": "Napolean Hills"
+  }
+]
+
+  """  
+
+
+🔍 GET /books/<int:book_id>
+
+> Description: Get details of a single book by ID.
+
+> Parameters:
+
+> book_id (int): ID of the book
+
+> Response:
+
+> 200 OK:
+
+    {
+        "id": 1,
+        "title": "Two States",
+        "author": "Chetan Bhagat"
+    }
+
+> 404 Not Found:
+
+    "Book not found"
+
+
+➕ POST /books
+
+> Description: Add a new book.
+
+> Request Body:
+
+    {
+         "title": "Wings of Fire",
+         "author": "A.P.J. Abdul Kalam"
+    }
+> Response:
+
+    201 Created
+
+    {
+      "id": 3,
+      "title": "Wings of Fire",
+      "author": "A.P.J. Abdul Kalam"
+    }
+
+✏️ PUT /books/<int:book_id>
+
+> Description: Update an existing book.
+
+> Parameters:
+
+    book_id (int): ID of the book to update
+
+> Request Body (partial or full):
+
+    {
+        "title": "Updated Title",
+        "author": "Updated Author"
+    }
+
+> Response:
+
+    200 OK
+
+    {
+        "id": 1,
+        "title": "Updated Title",
+        "author": "Updated Author"
+    }
+
+> 404 Not Found:
+
+  "Not found"
+
+
+
+❌ DELETE /books/<int:book_id>
+
+> Description: Delete a book by ID.
+
+> Parameters:
+
+    book_id (int): ID of the book
+
+> Response:
+
+   204 No Content
+
+
+⚙️ Running the Application
+
+    python app.py
+
+
+The API will be available at http://localhost:5000.
+
+
+🛠 Example cURL Commands
+
+> Add a book
+
+curl -X POST http://localhost:5000/books \
+  -H "Content-Type: application/json" \
+  -d '{"title": "My Book", "author": "Author Name"}'
+
+> Update a book
+
+curl -X POST http://localhost:5000/books \
+  -H "Content-Type: application/json" \
+  -d '{"title": "My Book", "author": "Author Name"}'
+
+> Delete a book
+
+curl -X DELETE http://localhost:5000/books/2
+
+
+

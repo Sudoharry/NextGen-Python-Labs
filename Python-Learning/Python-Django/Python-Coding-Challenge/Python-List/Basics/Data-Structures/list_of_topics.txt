@@ -1,0 +1,13 @@
+1) Class and Object – Blueprint vs. real-world instance
+
+2) Constructor (__init__ method) – Initializes object state
+
+3) self keyword – Refers to the instance itself
+
+4) Encapsulation – Hiding internal state (using _ or __)
+
+5) Inheritance – Reusing code from parent classes
+
+5) Polymorphism – Same function name, different behavior
+
+6) Abstraction – Hiding complexity using abstract classes (ABC module)

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Python: module library_system</title>
+</head><body>
+
+<table class="heading">
+<tr class="heading-text decor">
+<td class="title">&nbsp;<br><strong class="title">library_system</strong></td>
+<td class="extra"><a href=".">index</a><br><a href="file:/home/harry/NextGen-Python-Labs/Python-Learning/Python-Django/Python-Coding-Challenge/Python-List/Basics/Mini-Projects/library_system.py">/home/harry/NextGen-Python-Labs/Python-Learning/Python-Django/Python-Coding-Challenge/Python-List/Basics/Mini-Projects/library_system.py</a></td></tr></table>
+    <p><span class="code">Simple&nbsp;Library&nbsp;System&nbsp;step&nbsp;by&nbsp;step&nbsp;that&nbsp;covers:<br>
+&nbsp;<br>
+&nbsp;OOP&nbsp;(using&nbsp;a&nbsp;<a href="#Book">Book</a>&nbsp;class)<br>
+&nbsp;Lists&nbsp;(to&nbsp;hold&nbsp;books)<br>
+&nbsp;Dicts&nbsp;(to&nbsp;map&nbsp;book_id&nbsp;→&nbsp;<a href="#Book">Book</a>)<br>
+&nbsp;Sets&nbsp;(to&nbsp;track&nbsp;unique&nbsp;genres)</span></p>
+<p>
+<table class="section">
+<tr class="decor index-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><strong class="bigsection">Classes</strong></td></tr>
+    
+<tr><td class="decor index-decor"><span class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>&nbsp;</td>
+<td class="singlecolumn"><dl>
+<dt class="heading-text"><a href="builtins.html#object">builtins.object</a>
+</dt><dd>
+<dl>
+<dt class="heading-text"><a href="library_system.html#Book">Book</a>
+</dt></dl>
+</dd>
+</dl>
+ <p>
+<table class="section">
+<tr class="decor title-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><a name="Book">class <strong>Book</strong></a>(<a href="builtins.html#object">builtins.object</a>)</td></tr>
+    
+<tr><td class="decor title-decor" rowspan=2><span class="code">&nbsp;&nbsp;&nbsp;</span></td>
+<td class="decor title-decor" colspan=2><span class="code"><a href="#Book">Book</a>(title,&nbsp;author,&nbsp;genre,&nbsp;status='Available')<br>
+&nbsp;<br>
+<br>&nbsp;</span></td></tr>
+<tr><td>&nbsp;</td>
+<td class="singlecolumn">Methods defined here:<br>
+<dl><dt><a name="Book-__init__"><strong>__init__</strong></a>(self, title, author, genre, status='Available')</dt><dd><span class="code">Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</span></dd></dl>
+
+<dl><dt><a name="Book-borrow"><strong>borrow</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="Book-display"><strong>display</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="Book-return_book"><strong>return_book</strong></a>(self)</dt></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><span class="code">dictionary&nbsp;for&nbsp;instance&nbsp;variables</span></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><span class="code">list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object</span></dd>
+</dl>
+</td></tr></table></td></tr></table><p>
+<table class="section">
+<tr class="decor functions-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><strong class="bigsection">Functions</strong></td></tr>
+    
+<tr><td class="decor functions-decor"><span class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>&nbsp;</td>
+<td class="singlecolumn"><dl><dt><a name="-borrow_book"><strong>borrow_book</strong></a>(book_id)</dt></dl>
+ <dl><dt><a name="-return_book"><strong>return_book</strong></a>(book_id)</dt></dl>
+ <dl><dt><a name="-show_all_books"><strong>show_all_books</strong></a>()</dt><dd><span class="code">#&nbsp;&nbsp;Display&nbsp;All&nbsp;Books</span></dd></dl>
+</td></tr></table><p>
+<table class="section">
+<tr class="decor data-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><strong class="bigsection">Data</strong></td></tr>
+    
+<tr><td class="decor data-decor"><span class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>&nbsp;</td>
+<td class="singlecolumn"><strong>book</strong> = &lt;library_system.Book object&gt;<br>
+<strong>genres</strong> = {'Dystopian', 'Fiction', 'Programming', 'Self-Help'}<br>
+<strong>library</strong> = {1: &lt;library_system.Book object&gt;, 2: &lt;library_system.Book object&gt;, 3: &lt;library_system.Book object&gt;, 4: &lt;library_system.Book object&gt;, 5: &lt;library_system.Book object&gt;}</td></tr></table>
+</body></html>
